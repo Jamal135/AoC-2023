@@ -2,6 +2,8 @@
 
 day = 0
 
+# External imports
+
 # Internal imports
 from aoc import AOC
 
