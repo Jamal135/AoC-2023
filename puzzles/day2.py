@@ -1,6 +1,6 @@
 ''' Created: 02/12/2023 '''
 
-day = 2
+DAY = 2
 
 # External imports
 import re
@@ -45,7 +45,7 @@ def part_2(puzzle: str):
     return power_sum
 
 if __name__ == '__main__':
-    aoc = AOC(day)
+    aoc = AOC(DAY)
     puzzle = aoc.get_puzzle()
     
     print(part_1(puzzle))

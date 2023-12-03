@@ -1,6 +1,6 @@
 ''' Created: 03/12/2023 '''
 
-day = 3
+DAY = 3
 
 # External imports
 import re
@@ -36,7 +36,7 @@ def part_2(puzzle: str):
     return total
 
 if __name__ == '__main__':
-    aoc = AOC(day)
+    aoc = AOC(DAY)
     puzzle = aoc.get_puzzle()
     
     print(part_1(puzzle))

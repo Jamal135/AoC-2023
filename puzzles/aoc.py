@@ -1,8 +1,10 @@
 ''' Created: 01/12/2023 '''
 
+# External imports
 import os
 import requests
 from dotenv import load_dotenv
+from requests.models import Response
 
 load_dotenv()
 
@@ -16,27 +18,28 @@ class AOC():
             raise Exception('No session_cookie set in .env file...')
         self.day = puzzle_day
 
-    def get_request(self, url: str):
+    def get_request(self, url: str) -> Response:
         headers = {'Cookie': f'session={self.session_cookie}'}
         response = requests.get(url, headers=headers)
-        if response.status_code != 200:
-            raise Exception(f'Request to {url} failed. Status code: {response.status_code}')
-        return response.text.strip()
+        return response
     
-    def load_puzzle(self):
+    def load_puzzle(self) -> str:
         with open(f'{DATA_DIRECTORY}day_{self.day}.txt', 'r') as file:
-            contents = file.read()
-        return contents
+            puzzle = file.read()
+        return puzzle
     
-    def save_puzzle(self, response):
+    def save_puzzle(self, puzzle: str) -> None:
         with open(f'{DATA_DIRECTORY}day_{self.day}.txt', 'w') as file:
-            file.write(response)
+            file.write(puzzle)
 
     def get_puzzle(self):
         try:
             puzzle = self.load_puzzle()
         except FileNotFoundError:
             url = f'https://adventofcode.com/2023/day/{self.day}/input'
-            puzzle = self.get_request(url)
+            response = self.get_request(url)
+            if response.status_code != 200:
+                raise Exception(f'Failed to fetch puzzle: HTTP status code {response.status_code}')
+            puzzle = response.text.strip()
             self.save_puzzle(puzzle)
         return puzzle

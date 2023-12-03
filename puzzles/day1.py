@@ -1,6 +1,6 @@
 ''' Created: 02/12/2023 '''
 
-day = 1
+DAY = 1
 
 # External imports
 import re
@@ -42,7 +42,7 @@ def part_2(puzzle: str) -> int:
     return calibration_value_sum
 
 if __name__ == '__main__':
-    aoc = AOC(day)
+    aoc = AOC(DAY)
     puzzle = aoc.get_puzzle()
 
     print(part_1(puzzle))

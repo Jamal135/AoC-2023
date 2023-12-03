@@ -1,6 +1,6 @@
 ''' Created: '''
 
-day = 4
+DAY = 4
 
 # External imports
 
@@ -14,7 +14,7 @@ def part_2(puzzle: str):
     pass
 
 if __name__ == '__main__':
-    aoc = AOC(day)
+    aoc = AOC(DAY)
     puzzle = aoc.get_puzzle()
 
     print(part_1(puzzle))
