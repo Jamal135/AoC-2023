@@ -10,7 +10,7 @@ from aoc import AOC
 
 def part_1(puzzle: str):
     line_length = len(puzzle.split('\n')[0])
-    symbols = set(char for char in puzzle if not char.isdigit() and char != '.')
+    symbols = set(character for character in puzzle if not character.isdigit() and character != '.')
     puzzle = puzzle.replace('\n', '')
     total = 0
     for index, character in enumerate(puzzle):
