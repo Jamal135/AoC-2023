@@ -9,33 +9,29 @@ import re
 from aoc import AOC
 
 def part_1(puzzle: str):
-    line_length = len(puzzle.split('\n')[0])
-    symbols = set(character for character in puzzle if not character.isdigit() and character != '.')
+    line_length = puzzle.find('\n')
+    symbols = set(char for char in puzzle if not char.isdigit() and char != '.')
     puzzle = puzzle.replace('\n', '')
     total = 0
-    for index, character in enumerate(puzzle):
-        if character in symbols:
-            x, y = divmod(index, line_length)
-            base_index = x * line_length + y
-            get_slice = lambda offset: puzzle[(base_index + offset - 3):(base_index + offset + 4)]
+    for index, char in enumerate(puzzle):
+        if char in symbols:
+            get_slice = lambda offset: puzzle[(index + offset - 3):(index + offset + 4)]
             data = ' '.join(['' + get_slice(-line_length), get_slice(0), get_slice(line_length) + ''])
-            matches = re.findall(r'\d{3}|(?<=\S)\d{2}(?=\S)|(?<=\S{2})\d{1}(?=\S{2})', data)
-            total += sum(map(int, matches))
+            matches = map(int, re.findall(r'\d{3}|(?<=\S)\d{2}(?=\S)|(?<=\S{2})\d{1}(?=\S{2})', data))
+            total += sum(matches)
     return total
 
 def part_2(puzzle: str):
-    line_length = len(puzzle.split('\n')[0])
+    line_length = puzzle.find('\n')
     puzzle = puzzle.replace('\n', '')
     total = 0
     for index, character in enumerate(puzzle):
         if character == '*':
-            x, y = divmod(index, line_length)
-            base_index = x * line_length + y
-            get_slice = lambda offset: puzzle[(base_index + offset - 3):(base_index + offset + 4)]
+            get_slice = lambda offset: puzzle[(index + offset - 3):(index + offset + 4)]
             data = ' '.join(['' + get_slice(-line_length), get_slice(0), get_slice(line_length) + ''])
-            matches = re.findall(r'\d{3}|(?<=\S)\d{2}(?=\S)|(?<=\S{2})\d{1}(?=\S{2})', data)
+            matches = list(map(int, re.findall(r'\d{3}|(?<=\S)\d{2}(?=\S)|(?<=\S{2})\d{1}(?=\S{2})', data)))
             if len(matches) == 2:
-                gear_ratio = int(matches[0]) * int(matches[1])
+                gear_ratio = matches[0] * matches[1]
                 total += gear_ratio
     return total
 
