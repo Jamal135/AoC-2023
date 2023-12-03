@@ -7,6 +7,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 DATA_DIRECTORY = 'puzzles/data/'
+
 class AOC():
 
     def __init__(self, puzzle_day: int):
