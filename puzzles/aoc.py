@@ -25,12 +25,12 @@ class AOC():
         return response
     
     def load_puzzle(self) -> str:
-        with open(f'{DATA_DIRECTORY}day_{self.day}.txt', 'r') as file:
+        with open(f'{DATA_DIRECTORY}day{self.day}.txt', 'r') as file:
             puzzle = file.read()
         return puzzle
     
     def save_puzzle(self, puzzle: str) -> None:
-        with open(f'{DATA_DIRECTORY}day_{self.day}.txt', 'w') as file:
+        with open(f'{DATA_DIRECTORY}day{self.day}.txt', 'w') as file:
             file.write(puzzle)
 
     def get_puzzle(self):
