@@ -9,13 +9,14 @@ from requests.models import Response
 load_dotenv()
 
 DATA_DIRECTORY = 'puzzles/data/'
+COOKIE = 'SESSION_COOKIE'
 
 class AOC():
 
     def __init__(self, puzzle_day: int):
-        self.session_cookie = os.getenv('SESSION_COOKIE')
+        self.session_cookie = os.getenv(COOKIE)
         if not self.session_cookie:
-            raise Exception('No session_cookie set in .env file...')
+            raise Exception(f'No {COOKIE} set in .env file...')
         self.day = puzzle_day
 
     def get_request(self, url: str) -> Response:
