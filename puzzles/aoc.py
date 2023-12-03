@@ -21,8 +21,7 @@ class AOC():
 
     def get_request(self, url: str) -> Response:
         headers = {'Cookie': f'session={self.session_cookie}'}
-        response = requests.get(url, headers=headers)
-        return response
+        return requests.get(url, headers=headers)
     
     def load_puzzle(self) -> str:
         with open(f'{DATA_DIRECTORY}day{self.day}.txt', 'r') as file:
