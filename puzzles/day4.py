@@ -12,7 +12,7 @@ def part_1(puzzle: str):
     list_of_lines = puzzle.split('\n')
     total = 0
     for line in list_of_lines:
-        _, data = line.split(':', maxsplit=1) # Remove 'Card #:'
+        _, data = line.split(':', maxsplit=1) # Remove start text
         win_nums, game_nums = data.split('|', maxsplit=1)
         list_win_nums = re.findall(r'([0-9]+)', win_nums)
         list_game_nums = re.findall(r'([0-9]+)', game_nums)
