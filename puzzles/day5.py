@@ -6,6 +6,9 @@ DAY = 5
 import re
 from typing import Dict, List, Union
 from tqdm import tqdm
+from concurrent.futures import ThreadPoolExecutor
+import multiprocessing
+import numpy as np
 
 # Internal imports
 from aoc import AOC
@@ -43,21 +46,31 @@ def part_1(puzzle: str):
         results.append(value)
     return min(results)
 
+def process_value(value, maps):
+    for map in maps:
+        for index in range(map['size']):
+            map_min = map['source'][index]
+            map_max = map_min + map['length'][index]
+            if map_min <= value < map_max:
+                value = map['target'][index] + (value - map_min)
+                break
+    return value
+
 def part_2(puzzle: str):
-    pass
-    # data = parse_data(puzzle)
-    # seed_pairs = [data['seeds'][i:i + 2] for i in range(0, len(data['seeds']), 2)]
-    # values = []
-    # for seed_min, length in seed_pairs:
-    #     seed_max = seed_min + length
-    #     for map in data['maps']:
-    #         for index in range(map['size']):
-    #             map_min = map['source'][index]
-    #             map_max = map_min + map['length'][index]
-    #             if max(seed_min, map_min) < min(seed_max, map_max):
-                    
-    #                 break
-    
+    data = parse_data(puzzle)
+    seeds_array = np.array(data['seeds'])
+    seed_pairs = seeds_array.reshape(-1, 2)
+    for seed_min, seed_length in seed_pairs:
+        seed_max = seed_min + seed_length
+        for map in data['maps']:
+            for index in range(map['size']):
+                map_min = map['source'][index]
+                map_max = map_min + map['length'][index]
+                if max(seed_min, map_min) < min(seed_max, map_max):
+                    pass
+                else:
+                    pass
+
 if __name__ == '__main__':
     aoc = AOC(DAY)
     puzzle = aoc.get_puzzle()
