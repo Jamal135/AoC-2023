@@ -46,30 +46,34 @@ def part_1(puzzle: str):
         results.append(value)
     return min(results)
 
-def process_value(value, maps):
-    for map in maps:
-        for index in range(map['size']):
-            map_min = map['source'][index]
-            map_max = map_min + map['length'][index]
-            if map_min <= value < map_max:
-                value = map['target'][index] + (value - map_min)
-                break
-    return value
-
 def part_2(puzzle: str):
     data = parse_data(puzzle)
     seeds_array = np.array(data['seeds'])
     seed_pairs = seeds_array.reshape(-1, 2)
+    results = []
     for seed_min, seed_length in seed_pairs:
         seed_max = seed_min + seed_length
+        pairs = [[seed_min, seed_max]]
         for map in data['maps']:
-            for index in range(map['size']):
-                map_min = map['source'][index]
-                map_max = map_min + map['length'][index]
-                if max(seed_min, map_min) < min(seed_max, map_max):
-                    pass
-                else:
-                    pass
+            for location, pair in enumerate(pairs):
+                pair_min, pair_max = pair
+                new_pairs, old_pairs = [], set()
+                for index in range(map['size']):
+                    map_min = map['source'][index]
+                    map_max = map_min + map['length'][index]
+                    if max(pair_min, map_min) < min(pair_max, map_max):
+                        overlap_min = max(pair_min, map_min)
+                        overlap_max = min(pair_max, map_max)
+                        transformed_min = map['target'][index] + (overlap_min - map_min)
+                        transformed_max = map['target'][index] + (overlap_max - map_min)
+                        new_pairs.append([transformed_min, transformed_max])
+                        old_pairs.add(location)
+                        continue
+                pairs.extend(new_pairs)
+                for location in sorted(old_pairs, reverse=True):
+                    pairs.pop(location)
+        results.extend(pairs)
+    return min(pair[0] for pair in results)
 
 if __name__ == '__main__':
     aoc = AOC(DAY)
