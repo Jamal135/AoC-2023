@@ -5,9 +5,6 @@ DAY = 5
 # External imports
 import re
 from typing import Dict, List, Union
-from tqdm import tqdm
-from concurrent.futures import ThreadPoolExecutor
-import multiprocessing
 import numpy as np
 
 # Internal imports
