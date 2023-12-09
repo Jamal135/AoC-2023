@@ -11,7 +11,7 @@ load_dotenv()
 DATA_DIRECTORY = 'puzzles/data/'
 COOKIE = 'SESSION_COOKIE'
 
-class AOC():
+class AOC:
 
     def __init__(self, puzzle_day: int):
         self.session_cookie = os.getenv(COOKIE)
