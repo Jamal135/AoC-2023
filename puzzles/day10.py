@@ -93,11 +93,32 @@ def part_1(puzzle: str):
     loop_positions = construct_loop(data, start_position, facing)
     return math.ceil(len(loop_positions[:-1]) / 2)
 
+def find_interior(positions: List[List[int]], width: int, height: int) -> int:
+    interior_matrix = [[0 for _ in range(width)] for _ in range(height)]
+    x_values = []
+    for y in range(height):
+        x_values.append(sorted([pos[0] for pos in positions if pos[1] == y]))
+    for y in range(height):
+        if x_values[y] == []:
+            continue
+        max_x = x_values[y][-1] + 1
+        min_x = x_values[y][0]
+        for x in range(min_x, max_x):
+            if x in x_values[y]:
+                interior_matrix[y][x] += 3
+            if x not in x_values[y]:
+                interior_matrix[y][x] += 1
+    for line in interior_matrix:
+        print(line)
+    # Need to account for gaps between pipes somehow...
+    return sum(cell == 1 for row in interior_matrix for cell in row)
+
 def part_2(puzzle: str):
     data = [[char for char in string] for string in puzzle.split('\n')]
     origin_position = find_character(data, 'S')
     start_position, facing = discover_start(data, origin_position)
     loop_positions = construct_loop(data, start_position, facing)
+    return find_interior(loop_positions, len(data[0]), len(data))
 
 if __name__ == '__main__':
     aoc = AOC(DAY)
